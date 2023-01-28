@@ -16,9 +16,11 @@ caps["pageLoadStrategy"] = "eager"  #  interactive
 # driver = webdriver.Opera( executable_path=r'C:\\Drivers\\edgedriver_win64.exe')
 # desired_capabilities=caps,
 
-driver = webdriver.Chrome(desired_capabilities=caps,executable_path='C:/Drivers/edgedriver_win64/msedgedriver.exe')
+
+driver = webdriver.Edge(desired_capabilities=caps,executable_path='C:/Drivers/edgedriver_win64/msedgedriver.exe')
 ############################################
 ######## Section for Manual Input ##########
+parentPath = 'D:\Lesco\Recovery\\01-23\\'
 fileToProcess = 'WorkingBookDT25-10k.xlsx'
 refNoCol = 3
 remarksCol = 8
@@ -26,7 +28,7 @@ isRefComplete = True
 batchCol = 2
 subDiv  =   "11216"
 ############################################
-wb = load_workbook(filename = fileToProcess)
+wb = load_workbook(filename = parentPath+fileToProcess)
     
 for sheet in wb.sheetnames:
     ws = wb[sheet]
@@ -34,7 +36,7 @@ for sheet in wb.sheetnames:
     for row in range(2,ws.max_row+1): 
         # if row%100==0:
                 # print('Saving Workbook')
-                # wb.save(filename = sheet +'_'+ str(row)+'_'+fileToProcess)
+                # wb.save(filename = parentPath+sheet +'_'+ str(row)+'_'+fileToProcess)
         if isRefComplete:
             ref     =   str(ws.cell(row,refNoCol).value) 
             batch   =   ref[:len(ref)-12]#str(ws.cell(row,batchCol).value)
@@ -66,19 +68,20 @@ for sheet in wb.sheetnames:
         except:
             print('No Data Found')
 
-
-    print('Completed Sheet '+sheet+' Saving Workbook')
-    wb.save(filename = 'complete_'+sheet+'_'+fileToProcess)
-    
+    try:
+        print('Completed Sheet '+sheet+' Saving Workbook')
+        wb.save(filename = parentPath+'complete_'+sheet+'_'+fileToProcess)
+    except:
+        pass
 print('Completed File Saving Workbook')
 try:
-    wb.save(filename = 'complete_'+fileToProcess)
+    wb.save(filename = parentPath+'complete_'+fileToProcess)
     wb.close()
     driver.quit()
 except:
     retry ='r'
     while retry =='r':
-        wb.save(filename = 'complete_'+fileToProcess)
+        wb.save(filename = parentPath+'complete_'+fileToProcess)
         wb.close()
         driver.quit()
         retry = input("Enter 'r' to retry, any other key to exit: ")
