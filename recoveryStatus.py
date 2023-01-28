@@ -17,17 +17,17 @@ caps["pageLoadStrategy"] = "eager"  #  interactive
 # desired_capabilities=caps,
 
 
-driver = webdriver.Edge(desired_capabilities=caps,executable_path='C:/Drivers/edgedriver_win64/msedgedriver.exe')
 ############################################
 ######## Section for Manual Input ##########
-parentPath = 'D:\Lesco\Recovery\\01-23\\'
-fileToProcess = 'WorkingBookDT25-10k.xlsx'
-refNoCol = 3
-remarksCol = 8
+parentPath = input('Enter folder path (e.g.,D:\Lesco\Recovery\\01-23) :')+'\\'
+fileToProcess = input('Enter file name (e.g.,WorkingBookDT25-10k) :')+'.xlsx'
+refNoCol = int(input('Enter reference number column number (e.g.,3) :'))
+remarksCol = int(input('Enter remarks number (e.g.,3) :'))
 isRefComplete = True
 batchCol = 2
 subDiv  =   "11216"
 ############################################
+driver = webdriver.Chrome(desired_capabilities=caps,executable_path='C:/Drivers/edgedriver_win64/msedgedriver.exe')
 wb = load_workbook(filename = parentPath+fileToProcess)
     
 for sheet in wb.sheetnames:
