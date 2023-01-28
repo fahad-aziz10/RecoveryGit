@@ -82,11 +82,6 @@ except:
         wb.close()
         driver.quit()
         retry = input("Enter 'r' to retry, any other key to exit: ")
-    # if retry == 'r':
-    #     pass
-    # elif retry == 'e':
-    #     pass
-    # else:
 
 
 
