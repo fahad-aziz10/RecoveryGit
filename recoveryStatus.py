@@ -57,12 +57,12 @@ for sheet in wb.sheetnames:
         try:
             driver.get(link)
             WebDriverWait(driver, timeout=3).until(ec.visibility_of_element_located((By.XPATH , '/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[13]/td[2]/strong')))
-            output_txt = 'P='+driver.find_element_by_xpath('/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[13]/td[2]/strong').text
+            output_txt = 'P='+driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[13]/td[2]/strong').text
             if output_txt == 'P=0':
                 print("No Payment")
                 continue
-            output_txt += '  DT '+driver.find_element_by_xpath('/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[14]/td[2]/strong').text
-            output_txt += '  IN '+driver.find_element_by_xpath('/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[15]/td[2]/strong').text
+            output_txt += '  DT '+driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[14]/td[2]/strong').text
+            output_txt += '  IN '+driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[15]/td[2]/strong').text
             ws.cell(row,remarksCol).value = output_txt
             print(output_txt)
         except:
