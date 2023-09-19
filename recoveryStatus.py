@@ -38,7 +38,7 @@ wb = load_workbook(filename = parentPath+fileToProcess)
     
 for sheet in wb.sheetnames:
     ws = wb[sheet]
-    print("Testing of "+ sheet +"started from row 6 to "+str(ws.max_row+1))
+    print("Testing of "+ sheet +"started from row 2 to "+str(ws.max_row+1))
     for row in range(2,ws.max_row+1): 
         # if row%100==0:
                 # print('Saving Workbook')
@@ -56,12 +56,23 @@ for sheet in wb.sheetnames:
         if str(ws.cell(row,remarksCol).value) != 'None' :
             print("Remarks already present")
             continue
-        if batch == '24' or batch == '44' or batch == '46' or batch == '36':
-            link = "http://www.lesco.gov.pk/Customer_Reg/AccountStatusMDI.aspx?nBatchNo="+batch+"&nSubDiv="+subDiv+"&nRefNo="+refNo+"&strRU=U"
-        else:
-            link = "http://www.lesco.gov.pk/Customer_Reg/AccountStatus.aspx?nBatchNo="+batch+"&nSubDiv="+subDiv+"&nRefNo="+refNo+"&strRU=U"
+
+        link = "http://www.lesco.gov.pk:36269/Modules/CustomerBill/CheckBill.asp"
+        # if batch == '24' or batch == '44' or batch == '46' or batch == '36':
+        #     link = "http://www.lesco.gov.pk/Customer_Reg/AccountStatusMDI.aspx?nBatchNo="+batch+"&nSubDiv="+subDiv+"&nRefNo="+refNo+"&strRU=U"
+        # else:
+        #     link = "http://www.lesco.gov.pk/Customer_Reg/AccountStatus.aspx?nBatchNo="+batch+"&nSubDiv="+subDiv+"&nRefNo="+refNo+"&strRU=U"
         try:
             driver.get(link)
+            WebDriverWait(driver, timeout=3).until(ec.visibility_of_element_located((By.XPATH , '/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[1]/center/div/table/tbody/tr[2]/td[2]/input[1]')))
+            driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[1]/center/div/table/tbody/tr[2]/td[2]/input[1]').send_keys(batch)
+            driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[1]/center/div/table/tbody/tr[2]/td[2]/input[2]').send_keys(subDiv)
+            driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[1]/center/div/table/tbody/tr[2]/td[2]/input[3]').send_keys(refNo)
+            driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[1]/center/div/table/tbody/tr[4]/td/p/input[1]').click()
+
+            WebDriverWait(driver, timeout=3).until(ec.visibility_of_element_located((By.XPATH , '/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[2]/button')))
+            driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[2]/button').click()
+
             WebDriverWait(driver, timeout=3).until(ec.visibility_of_element_located((By.XPATH , '/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[13]/td[2]/strong')))
             output_txt = 'P='+driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[13]/td[2]/strong').text
             if output_txt == 'P=0':
