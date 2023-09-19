@@ -1,4 +1,4 @@
-import time
+import time, sys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
@@ -18,11 +18,17 @@ caps["pageLoadStrategy"] = "eager"  #  interactive
 
 
 ############################################
+if len(sys.argv) == 5:
+    parentPath = str(sys.argv[1])+'\\'
+    fileToProcess = str(sys.argv[2])+'.xlsx'
+    refNoCol = int(sys.argv[3])
+    remarksCol = int(sys.argv[4])
+else:
 ######## Section for Manual Input ##########
-parentPath = input('Enter folder path (e.g.,D:\Lesco\Recovery\\01-23) :')+'\\'
-fileToProcess = input('Enter file name (e.g.,WorkingBookDT25-10k) :')+'.xlsx'
-refNoCol = int(input('Enter reference number column number (e.g.,3) :'))
-remarksCol = int(input('Enter remarks number (e.g.,3) :'))
+    parentPath = input('Enter folder path (e.g.,D:\\Lesco\\Recovery\\01-23) :')+'\\'
+    fileToProcess = input('Enter file name (e.g.,WorkingBookDT25-10k) :')+'.xlsx'
+    refNoCol = int(input('Enter reference number column number (e.g.,3) :'))
+    remarksCol = int(input('Enter remarks number (e.g.,3) :'))
 isRefComplete = True
 batchCol = 2
 subDiv  =   "11216"
