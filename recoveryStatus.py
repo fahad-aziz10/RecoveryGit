@@ -56,30 +56,31 @@ for sheet in wb.sheetnames:
         if str(ws.cell(row,remarksCol).value) != 'None' :
             print("Remarks already present")
             continue
-
-        link = "http://www.lesco.gov.pk:36269/Modules/CustomerBill/CheckBill.asp"
+        
+        link = "http://www.lesco.gov.pk:36269/Modules/CustomerBillN/CheckBill.asp"
+        # link = "http://www.lesco.gov.pk:36269/Modules/CustomerBill/CheckBill.asp"
         # if batch == '24' or batch == '44' or batch == '46' or batch == '36':
         #     link = "http://www.lesco.gov.pk/Customer_Reg/AccountStatusMDI.aspx?nBatchNo="+batch+"&nSubDiv="+subDiv+"&nRefNo="+refNo+"&strRU=U"
         # else:
         #     link = "http://www.lesco.gov.pk/Customer_Reg/AccountStatus.aspx?nBatchNo="+batch+"&nSubDiv="+subDiv+"&nRefNo="+refNo+"&strRU=U"
         try:
             driver.get(link)
-            WebDriverWait(driver, timeout=3).until(ec.visibility_of_element_located((By.XPATH , '/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[1]/center/div/table/tbody/tr[2]/td[2]/input[1]')))
-            driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[1]/center/div/table/tbody/tr[2]/td[2]/input[1]').send_keys(batch)
-            driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[1]/center/div/table/tbody/tr[2]/td[2]/input[2]').send_keys(subDiv)
-            driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[1]/center/div/table/tbody/tr[2]/td[2]/input[3]').send_keys(refNo)
-            driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[1]/center/div/table/tbody/tr[4]/td/p/input[1]').click()
+            WebDriverWait(driver, timeout=3).until(ec.visibility_of_element_located((By.XPATH , '/html/body/div[1]/div/div[2]/form[1]/center/div/table/tbody/tr[1]/td/input[1]')))
+            driver.find_element(By.XPATH,'/html/body/div[1]/div/div[2]/form[1]/center/div/table/tbody/tr[1]/td/input[1]').send_keys(batch)
+            driver.find_element(By.XPATH,'/html/body/div[1]/div/div[2]/form[1]/center/div/table/tbody/tr[1]/td/input[2]').send_keys(subDiv)
+            driver.find_element(By.XPATH,'/html/body/div[1]/div/div[2]/form[1]/center/div/table/tbody/tr[1]/td/input[3]').send_keys(refNo)
+            driver.find_element(By.XPATH,'/html/body/div[1]/div/div[2]/form[1]/center/div/table/tbody/tr[2]/td/input[1]').click()
 
-            WebDriverWait(driver, timeout=3).until(ec.visibility_of_element_located((By.XPATH , '/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[2]/button')))
-            driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/form[2]/button').click()
+            WebDriverWait(driver, timeout=3).until(ec.visibility_of_element_located((By.XPATH , '/html/body/div[1]/div/div[2]/table/tbody/tr[9]/td/form/button')))
+            driver.find_element(By.XPATH,'/html/body/div[1]/div/div[2]/table/tbody/tr[9]/td/form/button').click()
 
-            WebDriverWait(driver, timeout=3).until(ec.visibility_of_element_located((By.XPATH , '/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[13]/td[2]/strong')))
-            output_txt = 'P='+driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[13]/td[2]/strong').text
+            WebDriverWait(driver, timeout=3).until(ec.visibility_of_element_located((By.XPATH , '/html/body/div[1]/div[2]/div/div[4]/div[1]/strong')))
+            output_txt = 'P='+driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/div/div[4]/div[1]/strong').text
             if output_txt == 'P=0':
                 print("No Payment")
                 continue
-            output_txt += '  DT '+driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[14]/td[2]/strong').text
-            output_txt += '  IN '+driver.find_element(By.XPATH,'/html/body/table/tbody/tr[5]/td/table/tbody/tr/td[2]/div/div[2]/table/tbody/tr[15]/td[2]/strong').text
+            output_txt += '  DT '+driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/div/div[4]/div[2]/strong').text
+            output_txt += '  IN '+driver.find_element(By.XPATH,'/html/body/div[1]/div[2]/div/div[4]/div[3]/strong').text
             ws.cell(row,remarksCol).value = output_txt
             print(output_txt)
         except:
